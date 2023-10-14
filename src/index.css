@@ -5,9 +5,212 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #212121;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  max-width: 600px;
+  padding: 1rem;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.search-container {
+  width: 600px;
+}
+
+.search-container input {
+  color: #212121;
+  outline: none!important;
+  border-color: #fff!important;
+}
+
+.search-container input:hover, .search-container input:focus {
+  background-color: #fff;
+}
+
+.search-container button {
+  background-color: rgb(254, 44, 85)!important;
+  transition: .3s all;
+  -webkit-transition: .3s all;
+  -moz-transition: .3s all;
+  -ms-transition: .3s all;
+  -o-transition: .3s all;
+  padding: 0 1rem!important;
+  width: 50px;
+}
+
+.search-container button:hover {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
+}
+
+.search-container .disabled {
+  pointer-events: none;
+  opacity: .9;
+}
+
+h2 {
+  color: #fff;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  width: auto;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.table-container .download-all {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.table-container .download-all p {
+  margin-right: 1rem;
+  color: #fff;
+}
+
+.button-download {
+  margin-right: 1rem;
+  background-color: rgb(254, 44, 85)!important;
+}
+
+.ant-table {
+  height: 63vh;
+  overflow: scroll;
+}
+
+.not-exist-video {
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.ant-pagination {
+  margin: 10px 0!important;
+}
+
+.ant-pagination-item a {
+  color: #fff!important;
+}
+.ant-pagination-item-active a {
+  color: rgb(254, 44, 85)!important;
+}
+.ant-pagination-item-link span {
+  color: #fff!important;
+}
+.ant-pagination-disabled span {
+  color: #666!important;
+}
+
+.link-to-tt {
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.link-to-tt:hover {
+  color: rgb(254, 44, 85)!important;;
+}
+
+.link-download-container {
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: #181818;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.link-download-container>div {
+  flex: 1;
+}
+
+.link-download-container .info {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.link-download-container .info img {
+  border-radius: 50%;
+  width: 100%;
+  max-width: 100px;
+  margin-bottom: 0.5em;
+  padding: 1rem;
+}
+
+.link-download-container .download {
+  text-align: center;
+}
+
+.link-download-container .download .stat {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.stat svg {
+  margin-right: 5px;
+}
+
+/* animation */
+.stage {
+  display: flex;
+  justify-content: center;
+}
+.dot-flashing {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgb(254, 44, 85);
+  color: rgb(254, 44, 85);
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+.dot-flashing::before, .dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+.dot-flashing::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgb(254, 44, 85);
+  color: rgb(254, 44, 85);
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+.dot-flashing::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgb(254, 44, 85);
+  color: rgb(254, 44, 85);
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: rgb(254, 44, 85);
+  }
+  50%, 100% {
+    background-color: rgba(254, 44, 85, .2);
+  }
+}
+    
