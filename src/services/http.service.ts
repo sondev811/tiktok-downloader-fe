@@ -33,7 +33,7 @@ export const post = async (endpoint: string, body: any) => {
     return {
       status: status.failed,
       result: null,
-      message: error.response.data.message
+      message: error?.response?.data?.message || 'Không thể kết nối tới server!!!'
     }
   }
 }
