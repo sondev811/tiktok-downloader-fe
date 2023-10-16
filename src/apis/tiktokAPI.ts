@@ -7,6 +7,9 @@ export const getDataFromURL = (url: string) => {
 }
 
 export const getVideosFromUser = (username: string) => {
+  if (username && username.charAt(0) === '@') {
+    username = username.substring(1);
+  }
   const body = { username };
   return post(apis.getVideosFromUser, body);
 }

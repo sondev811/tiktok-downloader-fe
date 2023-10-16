@@ -7,19 +7,7 @@ import { formatTime } from '../utils';
 import { downloadFile } from '../services/http.service';
 import { downloadVideoAPI } from '../apis/tiktokAPI';
 import { status } from '../constants';
-
-interface DataType {
-  index: number;
-  usernameAndId: {
-    username: string;
-    id: string
-  };
-  createTime: string;
-  image: string;
-  likeCount: number;
-  commentCount: number;
-  desc: string;
-}
+import { DataType } from '../interfaces/Tiktok';
 
 interface LoadingState {
   [key: string]: boolean;
@@ -77,9 +65,9 @@ const TableList: React.FC<props> = (props) => {
     },
     {
       title: 'Ngày tạo',
-      dataIndex: 'createTime',
+      dataIndex: 'createdAt',
       render: (date: string) => {
-        return(<p key={date}>{formatTime(date)}</p>)
+        return(<p key={date}>{date}</p>)
       }
     },
     {
@@ -90,8 +78,12 @@ const TableList: React.FC<props> = (props) => {
       }
     },
     {
+      title: 'Số view',
+      dataIndex: 'views',
+    },
+    {
       title: 'Số tim',
-      dataIndex: 'likeCount',
+      dataIndex: 'likesCount',
     },
     {
       title: 'Số comment',

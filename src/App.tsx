@@ -10,28 +10,7 @@ import TableList from './components/TableList';
 import { searchTypes, status } from './constants';
 import { downloadFile } from './services/http.service';
 import { isValidURL } from './utils';
-interface IPost {
-  id: string;
-  createTime: string;
-  desc: string,
-  music?: any,
-  video: any,
-  statistics?: any
-  users: any
-}
-
-interface DataType {
-  index: number;
-  usernameAndId: {
-    username: string,
-    id: string
-  };
-  createTime: string;
-  image: string;
-  likeCount: number;
-  commentCount: number;
-  desc: string;
-}
+import { DataType, IPost } from './interfaces/Tiktok';
 
 function App() {
 
@@ -42,21 +21,23 @@ function App() {
   const [downloading, setDownloading] = useState<boolean>(false);
   const [searchLinkData, setSearchLinkData] = useState('');
 
-  const handlePost = (posts: IPost[], username: string) => {
-    return posts.map((post: IPost, index: number) => {
+  const handlePost = (data: IPost[], username: string): DataType[] => {
+    const handled = data.map((post: IPost, index: number) => {
       return {
         index: index + 1,
         usernameAndId: {
           username,
           id: post.id
         },
-        createTime: post.createTime,
-        desc: post.desc,
-        image: post.video.cover,
-        likeCount: post.statistics.likeCount,
-        commentCount: post.statistics.commentCount
+        createdAt: post.createdAt,
+        desc: post.description,
+        image: post.cover,
+        views: post.playCount,
+        likesCount: post.likesCount,
+        commentCount: post.commentCount
       }
     });
+    return handled;
   }
 
   const search = async (keyword: string) => {
@@ -79,7 +60,6 @@ function App() {
         toast.error(res.message);
         return;
       }
-      console.log(res.result);
       setSearchLinkData(res.result);
       return;
     }
@@ -92,7 +72,7 @@ function App() {
       toast.error(res.message);
       return;
     }
-    const handledPost = handlePost(res.result.posts, res.result.users.username);
+    const handledPost = handlePost(res.result.posts, res.result.username);
     setPosts(handledPost);
   }
 
