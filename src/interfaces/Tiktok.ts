@@ -41,3 +41,8 @@ export interface DataType {
   commentCount: number;
   desc: string;
 }
+
+export interface ICustomDownload {
+  username: string,
+  videoId: string
+}

@@ -5,6 +5,7 @@ export const apis = {
   getVideosFromUser: 'getVideosFromUser',
   download: 'download',
   downloadAll: 'downloadAll',
+  customDownload: 'customDownload',
 }
 
 export const status = {

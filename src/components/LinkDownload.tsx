@@ -1,7 +1,6 @@
 import { DownloadOutlined, HeartOutlined, CommentOutlined, ShareAltOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import { status } from '../constants';
 import { downloadFile } from '../services/http.service';
 
@@ -24,10 +23,10 @@ const LinkDownload: React.FC<Props> = ({ data }) => {
         throw Error();
       }
       setDownloading(false);
-      toast.success(`Tải video thành công!!!`);
+      message.success(`Tải video thành công!!!`);
     } catch (error) {
       console.log(error);
-      toast.error('Tải video không thành công!!!');
+      message.error('Tải video không thành công!!!');
     }
   }
   return (

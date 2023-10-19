@@ -14,14 +14,25 @@ code {
 }
 
 .App {
-  max-width: 600px;
+  max-width: 630px;
   padding: 1rem;
   width: 1000px;
   margin: 0 auto;
 }
 
 .search-container {
-  width: 600px;
+  width: 630px;
+  display: flex;
+}
+
+.search-box {
+  flex: 4;
+}
+
+.button-custom-dl {
+  flex: 1;
+  height: 33px!important;
+  margin-left: 5px;
 }
 
 .search-container input {
@@ -120,7 +131,7 @@ h2 {
 }
 
 .link-download-container {
-  width: 600px;
+  width: 630px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -163,11 +174,68 @@ h2 {
   margin-right: 5px;
 }
 
+.input-tag {
+  width: 630px;
+  margin: 0 auto;
+  background: #fff;
+  padding: .5rem 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.block-change {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.input-tag input{
+  width: 450px;
+  border: none;
+}
+
+.input-tag-download {
+  width: 630px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.input-tag-download button{
+  background-color: rgb(254, 44, 85)!important;
+  transition: .3s all;
+  -webkit-transition: .3s all;
+  -moz-transition: .3s all;
+  -ms-transition: .3s all;
+  -o-transition: .3s all;
+  padding: 0 1rem!important;
+  width: auto;
+  border: none;
+  color: #fff!important;
+}
+
+.input-tag-download button:disabled {
+  opacity: .5!important;
+}
+
+.remove-custom-download {
+  position: absolute;
+  right: 5px;
+  top: 0;
+}
+
+.ant-tag {
+  margin: 0 .2rem;
+  margin-bottom: .4rem;
+  padding: 0.3rem .5rem;
+  font-size: 16px;
+}
+
 /* animation */
 .stage {
   display: flex;
   justify-content: center;
 }
+
 .dot-flashing {
   position: relative;
   width: 10px;
@@ -178,12 +246,14 @@ h2 {
   animation: dot-flashing 1s infinite linear alternate;
   animation-delay: 0.5s;
 }
+
 .dot-flashing::before, .dot-flashing::after {
   content: "";
   display: inline-block;
   position: absolute;
   top: 0;
 }
+
 .dot-flashing::before {
   left: -15px;
   width: 10px;
@@ -194,6 +264,7 @@ h2 {
   animation: dot-flashing 1s infinite alternate;
   animation-delay: 0s;
 }
+
 .dot-flashing::after {
   left: 15px;
   width: 10px;

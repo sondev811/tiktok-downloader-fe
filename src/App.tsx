@@ -1,8 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons';
-import { Button, Input, InputRef } from 'antd';
+import { Button, Input, InputRef, message } from 'antd';
 import { Ref, useRef, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import { downloadAllAPI, getDataFromURL, getVideosFromUser } from './apis/tiktokAPI';
 import LinkDownload from './components/LinkDownload';
@@ -10,7 +8,8 @@ import TableList from './components/TableList';
 import { searchTypes, status } from './constants';
 import { downloadFile } from './services/http.service';
 import { isValidURL } from './utils';
-import { DataType, IPost } from './interfaces/Tiktok';
+import { DataType, ICustomDownload, IPost } from './interfaces/Tiktok';
+import InputAndTag from './components/InputAndTag';
 
 function App() {
 
@@ -20,6 +19,9 @@ function App() {
   const [searchType, setSearchType] = useState<string>('');
   const [downloading, setDownloading] = useState<boolean>(false);
   const [searchLinkData, setSearchLinkData] = useState('');
+  const [customDownLoad, setCustomDownload] = useState(false);
+  const [listVideo, setListVideo] = useState<ICustomDownload[]>([]);
+
 
   const handlePost = (data: IPost[], username: string): DataType[] => {
     const handled = data.map((post: IPost, index: number) => {
@@ -46,7 +48,7 @@ function App() {
     if (inputElement) {
       inputElement.blur();
     }
-    
+    setCustomDownload(false);
     setPosts([]);
     setSearched(false);
     setSearching(true);
@@ -57,7 +59,7 @@ function App() {
       setSearching(false);
       setSearched(true);
       if (res.status === status.failed) {
-        toast.error(res.message);
+        message.error(res.message);
         return;
       }
       setSearchLinkData(res.result);
@@ -69,7 +71,7 @@ function App() {
     setSearchType(searchTypes.username);
     setSearched(true);
     if (res.status === status.failed) {
-      toast.error(res.message);
+      message.error(res.message);
       return;
     }
     const handledPost = handlePost(res.result.posts, res.result.username);
@@ -89,9 +91,9 @@ function App() {
         await downloadFile(data.url, username, data.id);
       }
       setDownloading(false);
-      toast.success(`Tải xuống thành công!!!`);
+      message.success(`Tải xuống thành công!!!`);
     } catch (error) {
-      toast.error('Tải xuống tất cả không thành công');
+      message.error('Tải xuống tất cả không thành công');
       console.log(error);
     }
   }
@@ -104,16 +106,25 @@ function App() {
       <h2>Tiktok downloader</h2>
       <div className='search-container'>
         <Search 
-          placeholder="Video link(https://www.tiktok.com/username/video/...) hoặc username(@username)" 
+          placeholder="Video link hoặc username(@username)" 
           onSearch={search}
           enterButton
-          className={`${searching ? 'disabled' : ''}`}
+          className={`search-box ${searching ? 'disabled' : ''}`}
           loading={searching}
         />
+        <Button 
+          onClick={() => setCustomDownload(true)} 
+          type="primary" 
+          className='button-custom-dl' 
+          icon={<DownloadOutlined />} 
+          size='large'
+        >
+          Tải tùy chọn
+        </Button> 
       </div>
     </div>
     {
-      posts.length && !searching && searchType === searchTypes.username ?
+      posts.length && !searching && searchType === searchTypes.username && !customDownLoad ?
       <div className='table-container'>
         <div className='download-all'>
           <p>Kết quả tìm được: {posts.length}</p>
@@ -137,7 +148,7 @@ function App() {
       : null
     }
     {
-      !searching && searchType === searchTypes.videoLink && searchLinkData ?
+      !searching && searchType === searchTypes.videoLink && searchLinkData && !customDownLoad ?
       <LinkDownload data={searchLinkData}/>
       : null
     }
@@ -155,19 +166,10 @@ function App() {
     searched && !posts.length && !searchLinkData ? 
     <p className='not-exist-video'>Không tìm thấy người dùng hoặc video</p> : null
     }
-   
-    <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
-    />
+    
+    {
+      customDownLoad ? <InputAndTag data={listVideo} updateListVideo={setListVideo} /> : null
+    }
     </>
   );
 }

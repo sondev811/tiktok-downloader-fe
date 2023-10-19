@@ -1,4 +1,5 @@
 import { apis, hostURL } from "../constants";
+import { ICustomDownload } from "../interfaces/Tiktok";
 import { post } from "../services/http.service";
 
 export const getDataFromURL = (url: string) => {
@@ -28,4 +29,8 @@ export const downloadAllAPI = (username: string, idList: String[]) => {
   }
   const body = { username, idList }
   return post(apis.downloadAll, body);
+}
+
+export const customDownloadAPI = (body: ICustomDownload[]) => {
+  return post(apis.customDownload, body);
 }

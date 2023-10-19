@@ -1,9 +1,7 @@
 import { CopyOutlined, DownloadOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Button, Table } from 'antd';
+import { Button, Table, message } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { formatTime } from '../utils';
 import { downloadFile } from '../services/http.service';
 import { downloadVideoAPI } from '../apis/tiktokAPI';
 import { status } from '../constants';
@@ -30,7 +28,7 @@ const TableList: React.FC<props> = (props) => {
 
       const response = await downloadVideoAPI(username, id);
       if (response.status !== status.success || !response.result || !response.result.url || !response.result.url.no_wm) {
-        toast.error(response.message);
+        message.error(response.message);
         return;
       }
       const urlNoWaterMark = response.result.url.no_wm
@@ -40,11 +38,12 @@ const TableList: React.FC<props> = (props) => {
       if (progress !== status.success) {
         throw Error();
       }
-      toast.success(`Tải video ${id} thành công!!!`);
+      message.success(`Tải video ${id} thành công!!!`);
     } catch (error) {
       console.log(error);
       setLoadingState((prevState) => ({ ...prevState, [downloadInfo.id]: false }));
-      toast.error('Tải video không thành công!!!');
+      message.error(`Tải video ${downloadInfo.id} không thành công!!!`);
+
     }
   } 
   
