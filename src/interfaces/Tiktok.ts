@@ -43,6 +43,12 @@ export interface DataType {
 }
 
 export interface ICustomDownload {
-  username: string,
-  videoId: string
+  username: string;
+  videoId: string;
+}
+
+export interface ICustomDownloadRes {
+  id: string;
+  url: string;
+  username: string;
 }

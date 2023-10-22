@@ -1,6 +1,6 @@
 import React, { ClipboardEvent, ClipboardEventHandler, useRef, useState } from 'react';
 import { Tag, Input, Button, message } from 'antd';
-import { ICustomDownload } from '../interfaces/Tiktok';
+import { ICustomDownload, ICustomDownloadRes } from '../interfaces/Tiktok';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { customDownloadAPI } from '../apis/tiktokAPI';
 import { status } from '../constants';
@@ -86,13 +86,20 @@ const InputAndTag: React.FC<Props> = (props) => {
     try {
       setDownloading(true);
       const res = await customDownloadAPI(data)
-      if (!res || !res.result || res.status === status.failed) throw Error(res.message);
-      for (const data of res.result) {
+      if (!res || !res.result || !res.result.successList || 
+        !res.result.errorList || res.status === status.failed) throw Error(res.message);
+      for (const data of res.result.successList) {
         await downloadFile(data.url, data.username, data.id);
       }
       setDownloading(false);
+
+      res.result.errorList.length && 
+      res.result.errorList.map((item: ICustomDownloadRes) => {
+        message.error(`Video: ${item.id} không tồn tại hoặc đã bị xóa`);
+      })
       message.success(`Tải xuống thành công!!!`);
     } catch (error: any) {
+      setDownloading(false);
       message.error(error && error.message ? error.message : 'Lỗi server');
     }
   }
